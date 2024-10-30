@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ahorcado</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s;
+        }
+    </style>
+</head>
+<body>
+<h1>Ahorcado</h1>
+<p id="word">____</p>
+<input type="text" id="letter" maxlength="1" placeholder="Letra">
+<button onclick="guess()">Adivinar</button>
+<p id="message"></p>
+<script>
+    const word = "sol";
+    let guessed = "";
+    function guess() {
+        const letter = document.getElementById("letter").value.toLowerCase();
+        if (letter && !guessed.includes(letter)) {
+            guessed += letter;
+            updateWord();
+        }
+        document.getElementById("letter").value = '';
+    }
+    function updateWord() {
+        let display = "";
+        for (let char of word) {
+            display += guessed.includes(char) ? char : "_";
+        }
+        document.getElementById("word").innerText = display;
+        if (!display.includes("_")) {
+            document.getElementById("message").innerText = "¡Ganaste!";
+        }
+    }
+    function changeBackgroundColor() {
+        const colors = ["#ffcccb", "#ccffcc", "#ccccff", "#ffffcc", "#ffccff"];
+        document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    }
+    // Cambia el color cada 2 segundos
+    setInterval(changeBackgroundColor, 2000);
+    changeBackgroundColor(); // Cambia el color al cargar
+</script>
+</body>
+</html>
