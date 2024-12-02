@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Modelo 3D</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #2e24b9, #cddae6);
+            background-size: 100% 100%;
+            animation: gradientAnimation 10s ease infinite; 
+            color: white;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            height: 80%;
+            justify-content: space-between;
+            gap: 20px; 
+        }
+
+        .column {
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .column.text-left, .column.text-right {
+            width: 20%; 
+        }
+
+        .column.presentation {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 55%;
+            height: 110% 
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        progress {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 5px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #2e24b9;
+            transition: width 0.3s ease;
+        }
+
+        progress::-moz-progress-bar {
+            background-color: #2e24b9;
+        }
+
+        h3, p, button {
+            color: white;
+        }
+
+        button {
+            background-color: #2e24b9;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1b1591;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: transparent;
+            border: 2px solid #cddae6;
+            color: #cddae6;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #cddae6;
+            color: #2e24b9;
+        }
+
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-button">Regresar</a>
+    <div class="container">
+        <div class="column text-left">
+            <h3 class="card-title">¿Qué es Teachable Machine?</h3>
+            <p>Teachable Machine es una herramienta en línea de Google que permite entrenar modelos de aprendizaje automático de forma simple y sin necesidad de programar.</p>
+        </div>
+        <div class="column presentation">
+            <div>Teachable Machine Image Model</div>
+            <button type="button" onclick="init()">Start</button>
+            <div id="webcam-container"></div>
+            <div id="label-container"></div>
+        </div>
+        <div class="column text-right">
+            <h3 class="card-title">¿Cómo lo usé?</h3>
+            <p>En este caso lo use para análisis de las expresiones faciales acorde a las emociones asignando imagenes en las clase de cada emoción para que pudiera reconocerlas.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+        const URL = "https://teachablemachine.withgoogle.com/models/jrcAzEnqX/";
+        let model, webcam, labelContainer, maxPredictions;
+
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+            webcam = new tmImage.Webcam(200, 200, true);
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                const labelDiv = document.createElement("div");
+                const labelText = document.createElement("span");
+                labelDiv.appendChild(labelText);
+                const progressBar = document.createElement("progress");
+                progressBar.setAttribute("value", 0);
+                progressBar.setAttribute("max", 1);
+                labelDiv.appendChild(progressBar);
+                labelContainer.appendChild(labelDiv);
+            }
+        }
+
+        async function loop() {
+            webcam.update();
+            await predict();
+            window.requestAnimationFrame(loop);
+        }
+
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);
+            for (let i = 0; i < maxPredictions; i++) {
+                const labelDiv = labelContainer.childNodes[i];
+                labelDiv.querySelector("span").innerText = `${prediction[i].className}: ${prediction[i].probability.toFixed(2)}`;
+                labelDiv.querySelector("progress").value = prediction[i].probability;
+            }
+        }
+    </script>
+</body>
+</html>

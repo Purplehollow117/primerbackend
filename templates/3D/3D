@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Modelo 3D</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #190bdd, #ffffff); /* Fondo dinámico */
+            background-size: 100% 100%;
+            animation: gradientAnimation 10s ease infinite; /* Movimiento del fondo */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+            height: 80%;
+            justify-content: space-between;
+            opacity: 0; /* Inicio invisible */
+            transform: translateY(50px); /* Comienza desplazado hacia abajo */
+            animation: fadeIn 2s ease forwards; /* Animación de entrada */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1; /* Visible */
+                transform: translateY(0); /* Posición original */
+            }
+        }
+
+        .column {
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.3); /* Transparencia */
+            border-radius: 10px;
+            color: white;
+            animation: fadeInColumn 1.5s ease forwards; /* Animación independiente para las columnas */
+        }
+
+        @keyframes fadeInColumn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9); /* Pequeña reducción inicial */
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1); /* Tamaño original */
+            }
+        }
+
+        .column.text-left, .column.text-right {
+            width: 20%;
+        }
+
+        .column.presentation {
+            width: 55%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Primera columna de texto -->
+        <div class="column text-left">
+            <h3 class="card-title">Git status</h3>
+            <p>Muestra el estado del repositorio.</p>
+            <h3 class="card-title">Git add .</h3>
+            <p>Agrega cambios en archivos al área de preparación.</p>
+        </div>
+        <!-- Columna central para la presentación -->
+        <section class="model-3d text-center mt-5">
+            <div class="sketchfab-embed-wrapper">
+                <iframe title="Gojo Satoru from Jujutsu Kaisen" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/d2ff113d88f34a09be5c2d1266765cd0/embed?ui_theme=dark" style="width: 100%; height: 600px;"></iframe>
+                <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+                    <a href="https://sketchfab.com/3d-models/gojo-satoru-from-jujutsu-kaisen-d2ff113d88f34a09be5c2d1266765cd0" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Gojo Satoru from Jujutsu Kaisen</a> by 
+                    <a href="https://sketchfab.com/CVRxEarth" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">CVRxEarth</a> on 
+                    <a href="https://sketchfab.com" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
+                </p>
+            </div>
+        </section>
+        <!-- Segunda columna de texto -->
+        <div class="column text-right">
+            <h3 class="card-title">Git commit -m "actualización..."</h3>
+            <p>Registra los cambios en el repositorio.</p>
+            <h3 class="card-title">Git push</h3>
+            <p>Sube los cambios al repositorio remoto.</p>
+        </div>
+    </div>
+</body>
+</html>
+    

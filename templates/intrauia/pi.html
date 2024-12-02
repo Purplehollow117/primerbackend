@@ -3,25 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizar Presentación PDF</title>
+    <title>Presentaciones PDF</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #b10c0c, #f5f5f7);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
-        iframe {
+
+        .container {
+            display: flex;
+            justify-content: space-between;
             width: 80%;
             height: 80%;
-            border: none;
+            padding: 20px;
+        }
+
+        .column {
+            width: 40%;
+            height: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        embed {
+            width: 90%;
+            height: 90%;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: transparent;
+            border: 2px solid #f5f5f7;
+            color: #f5f5f7;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #f5f5f7;
+            color: #b10c0c;
         }
     </style>
 </head>
 <body>
-    <iframe src="Copia de Plantilla Mi PVU IBERO Puebla .pdf" title="INTRUIA pptx"></iframe>
+    <a href="javascript:history.back()" class="back-button">Regresar</a>
+    <div class="container">
+        <div class="column">
+            <div class="pdf-container">
+                <embed src="../intrauia/Copia de Plantilla Mi PVU IBERO Puebla .pdf" type="application/pdf">
+            </div>
+        </div>
+        <div class="column">
+            <div class="pdf-container">
+                <embed src="../intrauia/Javier Atlixqueño - 2024-11-30.pdf" type="application/pdf">
+            </div>
+        </div>
+    </div>
 </body>
 </html>

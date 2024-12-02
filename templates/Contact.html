@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Contacto</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #2e24b9, #cddae6);
+            background-size: 100% 100%;
+            animation: gradientAnimation 10s ease infinite; 
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .contact-card {
+            background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .contact-card h2 {
+            margin: 10px 0;
+        }
+
+        .contact-card img {
+            display: block;
+            margin: 10px auto;
+            width: 150px; /* Tamaño máximo del cuadro */
+            height: 150px; /* Tamaño máximo del cuadro */
+            object-fit: cover; /* Ajusta la imagen al cuadro sin deformarla */
+            border-radius: 50%; /* Hace la imagen circular */
+            border: 3px solid white; /* Añade un borde alrededor de la imagen */
+        }
+
+        .contact-card p {
+            margin: 5px 0;
+        }
+
+        .btn-top {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: rgba(46, 36, 185, 0.8); 
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-top:hover {
+            background-color: rgba(46, 36, 185, 1);
+        }
+
+        .btn-top:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <!-- Ficha de contacto -->
+    <div class="contact-card">
+        <h2>Ficha de Contacto</h2>
+        <img src="../static/images/mifoto.jpg" alt="Mi foto">
+        <p><strong>Nombre:</strong> Javier Atlixqueño Barcenas</p>
+        <p><strong>Celular:</strong> +52 556 495 8596</p>
+        <p><strong>Correo:</strong> atlixqueno.barcenas.javier@gmail.com / 202736@iberopuebla.mx</p>
+        <p><strong>Carrera:</strong> Ingeniería en Sistemas Computacionales</p>
+        <button class="btn-top" onclick="scrollToTop()">Regresar al Inicio</button>
+    </div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
